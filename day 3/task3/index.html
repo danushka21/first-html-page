@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Box Model Explorer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --amber-light: #faeeda;
+      --amber-mid: #BA7517;
+      --amber-dark: #854F0B;
+      --blue-light: #b5d4f4;
+      --blue-mid: #185FA5;
+      --blue-dark: #0C447C;
+      --green-light: #c0dd97;
+      --green-mid: #3B6D11;
+      --green-dark: #27500A;
+      --coral-light: #f5c4b3;
+      --coral-mid: #993C1D;
+      --coral-dark: #712B13;
+      --bg: #f8f6f1;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --text-muted: #666;
+      --border: #e0ddd5;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    header h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: var(--text);
+    }
+
+    header p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 620px) {
+      .container { grid-template-columns: 1fr; }
+    }
+
+    /* Visual Box */
+    .visual-area {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 320px;
+    }
+
+    #margin-box {
+      background: var(--amber-light);
+      border: 2px dashed var(--amber-mid);
+      border-radius: 6px;
+      padding: 40px;
+      position: relative;
+      transition: padding 0.2s ease;
+    }
+
+    #border-box {
+      background: var(--blue-light);
+      border: 2px solid var(--blue-mid);
+      border-radius: 6px;
+      padding: 30px;
+      position: relative;
+      transition: border-width 0.2s ease, padding 0.2s ease;
+    }
+
+    #padding-box {
+      background: var(--green-light);
+      border: 2px dashed var(--green-mid);
+      border-radius: 6px;
+      padding: 24px;
+      position: relative;
+      transition: padding 0.2s ease;
+    }
+
+    #content-box {
+      background: var(--coral-light);
+      border: 2px solid var(--coral-mid);
+      border-radius: 6px;
+      min-width: 80px;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: min-width 0.2s ease, min-height 0.2s ease;
+    }
+
+    .layer-label {
+      position: absolute;
+      top: 5px;
+      left: 9px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .content-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--coral-dark);
+      text-transform: uppercase;
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .control-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+    }
+
+    .control-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .color-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    .control-header span {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .control-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slider-row label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: 'Space Mono', monospace;
+      min-width: 38px;
+    }
+
+    input[type=range] {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 4px;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--text);
+      cursor: pointer;
+    }
+
+    .slider-val {
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'Space Mono', monospace;
+      min-width: 34px;
+      text-align: right;
+    }
+
+    /* CSS output */
+    .css-output {
+      grid-column: 1 / -1;
+      background: #1a1a1a;
+      color: #e0e0e0;
+      border-radius: 12px;
+      padding: 1.1rem 1.3rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 12.5px;
+      line-height: 1.8;
+    }
+
+    .css-selector { color: #85B7EB; }
+    .css-prop { color: #9FE1CB; }
+    .css-margin-val { color: var(--amber-dark); font-weight: 700; }
+    .css-border-val { color: #6aabf7; font-weight: 700; }
+    .css-padding-val { color: #7ec060; font-weight: 700; }
+    .css-content-val { color: #e89a82; font-weight: 700; }
+
+    /* Legend */
+    .legend {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 480px) {
+      .legend { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .legend-item {
+      border-radius: 10px;
+      padding: 0.7rem 0.85rem;
+      border: 1px solid transparent;
+    }
+
+    .legend-item .legend-name {
+      font-size: 12px;
+      font-weight: 700;
+      font-family: 'Space Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .legend-item .legend-desc {
+      font-size: 11px;
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Box Model Explorer</h1>
+    <p>Drag the sliders to see how each CSS layer works</p>
+  </header>
+
+  <div class="container">
+
+    <div class="visual-area">
+      <div id="margin-box">
+        <span class="layer-label" style="color: var(--amber-dark);">margin</span>
+        <div id="border-box">
+          <span class="layer-label" style="color: var(--blue-dark);">border</span>
+          <div id="padding-box">
+            <span class="layer-label" style="color: var(--green-dark);">padding</span>
+            <div id="content-box">
+              <span class="content-label">content</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+
+      <div class="control-card">
+        <div class="control-header">
+          <div class="color-dot" style="background:var(--amber-light); border: 2px dashed var(--amber-mid);"></div>
+          <span style="color: var(--amber-dark);">Margin</span>
+        </div>
+        <p class="control-desc">Space outside the border. Always transparent.</p>
+        <div class="slider-row">
+          <label>size</label>
+          <input type="range" min="8" max="60" value="40" id="margin-slider" style="accent-color: var(--amber-mid);" />
+          <span class="slider-val" id="margin-val" style="color:var(--amber-dark);">40px</span>
+        </div>
+      </div>
+
+      <div class="control-card">
+        <div class="control-header">
+          <div class="color-dot" style="background:var(--blue-light); border: 2px solid var(--blue-mid);"></div>
+          <span style="color: var(--blue-dark);">Border</span>
+        </div>
+        <p class="control-desc">Visible edge of the element. Has width, style, color.</p>
+        <div class="slider-row">
+          <label>width</label>
+          <input type="range" min="1" max="16" value="2" id="border-slider" style="accent-color: var(--blue-mid);" />
+          <span class="slider-val" id="border-val" style="color:var(--blue-dark);">2px</span>
+        </div>
+      </div>
+
+      <div class="control-card">
+        <div class="control-header">
+          <div class="color-dot" style="background:var(--green-light); border: 2px dashed var(--green-mid);"></div>
+          <span style="color: var(--green-dark);">Padding</span>
+        </div>
+        <p class="control-desc">Space between border and content. Shares element's bg color.</p>
+        <div class="slider-row">
+          <label>size</label>
+          <input type="range" min="4" max="50" value="24" id="padding-slider" style="accent-color: var(--green-mid);" />
+          <span class="slider-val" id="padding-val" style="color:var(--green-dark);">24px</span>
+        </div>
+      </div>
+
+      <div class="control-card">
+        <div class="control-header">
+          <div class="color-dot" style="background:var(--coral-light); border: 2px solid var(--coral-mid);"></div>
+          <span style="color: var(--coral-dark);">Content</span>
+        </div>
+        <p class="control-desc">Where text, images, and elements actually live.</p>
+        <div class="slider-row">
+          <label>size</label>
+          <input type="range" min="40" max="140" value="80" id="content-slider" style="accent-color: var(--coral-mid);" />
+          <span class="slider-val" id="content-val" style="color:var(--coral-dark);">80px</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="legend">
+      <div class="legend-item" style="background:var(--amber-light); border-color: var(--amber-mid);">
+        <div class="legend-name" style="color:var(--amber-dark);">Margin</div>
+        <div class="legend-desc" style="color:var(--amber-dark);">Outside spacing, transparent</div>
+      </div>
+      <div class="legend-item" style="background:var(--blue-light); border-color:var(--blue-mid);">
+        <div class="legend-name" style="color:var(--blue-dark);">Border</div>
+        <div class="legend-desc" style="color:var(--blue-dark);">Visible edge of element</div>
+      </div>
+      <div class="legend-item" style="background:var(--green-light); border-color:var(--green-mid);">
+        <div class="legend-name" style="color:var(--green-dark);">Padding</div>
+        <div class="legend-desc" style="color:var(--green-dark);">Inside spacing, shows bg</div>
+      </div>
+      <div class="legend-item" style="background:var(--coral-light); border-color:var(--coral-mid);">
+        <div class="legend-name" style="color:var(--coral-dark);">Content</div>
+        <div class="legend-desc" style="color:var(--coral-dark);">Text & images go here</div>
+      </div>
+    </div>
+
+    <div class="css-output">
+      <span class="css-selector">.box</span> {<br/>
+      &nbsp;&nbsp;<span class="css-prop">margin</span>: <span class="css-margin-val" id="css-margin">40px</span>;<br/>
+      &nbsp;&nbsp;<span class="css-prop">border</span>: <span class="css-border-val" id="css-border">2px solid #185FA5</span>;<br/>
+      &nbsp;&nbsp;<span class="css-prop">padding</span>: <span class="css-padding-val" id="css-padding">24px</span>;<br/>
+      &nbsp;&nbsp;<span class="css-prop">width</span>: <span class="css-content-val" id="css-content">80px</span>;<br/>
+      }
+    </div>
+
+  </div>
+
+  <script>
+    const marginSlider = document.getElementById('margin-slider');
+    const borderSlider = document.getElementById('border-slider');
+    const paddingSlider = document.getElementById('padding-slider');
+    const contentSlider = document.getElementById('content-slider');
+
+    function update() {
+      const m = parseInt(marginSlider.value);
+      const b = parseInt(borderSlider.value);
+      const p = parseInt(paddingSlider.value);
+      const c = parseInt(contentSlider.value);
+
+      document.getElementById('margin-val').textContent = m + 'px';
+      document.getElementById('border-val').textContent = b + 'px';
+      document.getElementById('padding-val').textContent = p + 'px';
+      document.getElementById('content-val').textContent = c + 'px';
+
+      document.getElementById('margin-box').style.padding = m + 'px';
+      document.getElementById('border-box').style.borderWidth = b + 'px';
+      document.getElementById('padding-box').style.padding = p + 'px';
+      document.getElementById('content-box').style.minWidth = c + 'px';
+      document.getElementById('content-box').style.minHeight = Math.round(c * 0.65) + 'px';
+
+      document.getElementById('css-margin').textContent = m + 'px';
+      document.getElementById('css-border').textContent = b + 'px solid #185FA5';
+      document.getElementById('css-padding').textContent = p + 'px';
+      document.getElementById('css-content').textContent = c + 'px';
+    }
+
+    marginSlider.addEventListener('input', update);
+    borderSlider.addEventListener('input', update);
+    paddingSlider.addEventListener('input', update);
+    contentSlider.addEventListener('input', update);
+  </script>
+
+</body>
+</html>
