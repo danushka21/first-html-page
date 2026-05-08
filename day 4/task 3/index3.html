@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Navbar — CSS Only</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0f172a;
+      --bg-menu:   #1e293b;
+      --accent:    #3b82f6;
+      --accent-h:  #60a5fa;
+      --text:      #f1f5f9;
+      --muted:     #94a3b8;
+      --border:    #334155;
+      --active-bg: #1d4ed8;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+    }
+
+    /* ─────────────────────────────────────────
+       SKIP LINK
+    ───────────────────────────────────────── */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 1rem;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.4rem 1rem;
+      border-radius: 0 0 6px 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      z-index: 9999;
+    }
+    .skip-link:focus { top: 0; }
+
+    /* ─────────────────────────────────────────
+       NAVBAR WRAPPER
+    ───────────────────────────────────────── */
+    nav {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 62px;
+    }
+
+    /* ── LOGO ── */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    /* ─────────────────────────────────────────
+       THE CHECKBOX HACK
+       Hidden checkbox controls mobile menu
+    ───────────────────────────────────────── */
+    #menu-toggle {
+      display: none; /* always hidden visually */
+    }
+
+    /* ── HAMBURGER LABEL (mobile only) ── */
+    .hamburger {
+      display: none;          /* hidden on desktop */
+      flex-direction: column;
+      justify-content: space-between;
+      width: 26px;
+      height: 20px;
+      cursor: pointer;
+      padding: 2px 0;
+      z-index: 200;
+    }
+
+    .hamburger .bar {
+      display: block;
+      width: 100%;
+      height: 2.5px;
+      background: var(--text);
+      border-radius: 99px;
+      transition: transform 0.35s ease, opacity 0.25s ease, width 0.25s ease;
+      transform-origin: center;
+    }
+
+    /* Animate hamburger → X when checked */
+    #menu-toggle:checked ~ .nav-inner .hamburger .bar:nth-child(1) {
+      transform: translateY(8.75px) rotate(45deg);
+    }
+    #menu-toggle:checked ~ .nav-inner .hamburger .bar:nth-child(2) {
+      opacity: 0;
+      width: 0;
+    }
+    #menu-toggle:checked ~ .nav-inner .hamburger .bar:nth-child(3) {
+      transform: translateY(-8.75px) rotate(-45deg);
+    }
+
+    /* ── DESKTOP NAV LINKS ── */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      display: inline-block;
+      padding: 0.45rem 0.9rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-radius: 7px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover { color: var(--text); background: var(--bg-menu); }
+    .nav-links a.active { color: var(--text); background: var(--active-bg); }
+
+    /* ── CTA BUTTON ── */
+    .nav-cta {
+      background: var(--accent) !important;
+      color: #fff !important;
+      font-weight: 600 !important;
+      padding: 0.45rem 1.1rem !important;
+    }
+    .nav-cta:hover { background: var(--accent-h) !important; }
+
+    /* ─────────────────────────────────────────
+       MOBILE STYLES  ≤ 768px
+    ───────────────────────────────────────── */
+    @media (max-width: 768px) {
+
+      /* Show hamburger */
+      .hamburger { display: flex; }
+
+      /* Nav links: hidden off-screen by default */
+      .nav-links {
+        position: fixed;
+        top: 62px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--bg);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        padding: 1.5rem 1.5rem 3rem;
+        overflow-y: auto;
+        transform: translateX(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: transform 0.35s cubic-bezier(0.4,0,0.2,1),
+                    opacity   0.3s ease,
+                    visibility 0.3s;
+        border-top: 1px solid var(--border);
+      }
+
+      /* CSS CHECKBOX HACK: open menu when checked */
+      #menu-toggle:checked ~ .nav-links {
+        transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .nav-links li { width: 100%; }
+
+      .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 0.9rem 0.5rem;
+        font-size: 1rem;
+        border-radius: 0;
+        border-bottom: 1px solid var(--border);
+        color: var(--muted);
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        background: var(--bg-menu);
+        color: var(--text);
+        padding-left: 1rem;
+      }
+
+      .nav-cta {
+        margin-top: 1rem;
+        border-radius: 8px !important;
+        text-align: center;
+        background: var(--accent) !important;
+        padding: 0.8rem 1rem !important;
+        border: none !important;
+      }
+    }
+
+    /* ─────────────────────────────────────────
+       PAGE DEMO CONTENT
+    ───────────────────────────────────────── */
+    .hero {
+      max-width: 700px;
+      margin: 6rem auto;
+      text-align: center;
+      padding: 0 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero p {
+      margin-top: 1rem;
+      color: #64748b;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .hero-badges {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .hero-badges span {
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+      padding: 0.3rem 0.9rem;
+      border-radius: 99px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .info-box {
+      max-width: 700px;
+      margin: 3rem auto;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+
+    .info-box h3 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 1rem;
+    }
+
+    .info-box ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .info-box ul li {
+      font-size: 0.9rem;
+      color: #334155;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .info-box ul li::before { content: "→"; color: var(--accent); font-weight: 700; }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ═══════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════ -->
+  <nav aria-label="Main navigation">
+
+    <!-- THE KEY: hidden checkbox that powers the mobile toggle -->
+    <input type="checkbox" id="menu-toggle" aria-hidden="true"/>
+
+    <div class="nav-inner">
+
+      <!-- Logo -->
+      <a href="#" class="logo" aria-label="DevKit Home">
+        <span aria-hidden="true">⚡</span>
+        DevKit
+      </a>
+
+      <!-- Hamburger label (connected to checkbox via for="menu-toggle") -->
+      <label
+        for="menu-toggle"
+        class="hamburger"
+        aria-label="Toggle navigation menu"
+        role="button"
+        tabindex="0"
+      >
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </label>
+
+    </div>
+
+    <!-- Nav links (OUTSIDE nav-inner so sibling selector ~ works) -->
+    <ul class="nav-links" role="list">
+      <li><a href="#" class="active" aria-current="page">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Portfolio</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#" class="nav-cta">Get Started</a></li>
+    </ul>
+
+  </nav>
+
+  <!-- ═══════════════════════════════════
+       PAGE CONTENT
+  ═══════════════════════════════════ -->
+  <main id="main">
+    <section class="hero">
+      <h1>Responsive Navbar<br/>with <em>CSS-Only</em> Toggle</h1>
+      <p>
+        Horizontal links on desktop. Hamburger menu on mobile.
+        Zero JavaScript — pure CSS checkbox hack with smooth animations.
+      </p>
+      <div class="hero-badges">
+        <span>✅ No JavaScript</span>
+        <span>✅ Flexbox</span>
+        <span>✅ Media Queries</span>
+        <span>✅ Checkbox Hack</span>
+        <span>✅ Accessible</span>
+      </div>
+    </section>
+
+    <div class="info-box">
+      <h3>How the CSS Checkbox Hack Works</h3>
+      <ul>
+        <li>A hidden <code>&lt;input type="checkbox"&gt;</code> is placed in the HTML</li>
+        <li>The hamburger icon is a <code>&lt;label for="menu-toggle"&gt;</code> — clicking it toggles the checkbox state</li>
+        <li>CSS sibling selector <code>#menu-toggle:checked ~ .nav-links</code> slides the menu in when checked</li>
+        <li>The 3 bars animate into an ✕ using <code>transform: rotate()</code> on <code>:checked</code> state</li>
+        <li>On desktop (>768px), the hamburger is hidden and links display as a flex row normally</li>
+      </ul>
+    </div>
+  </main>
+
+</body>
+</html>
