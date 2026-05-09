@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Product Card Grid</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      color: #222;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      transition: padding 0.3s ease;
+    }
+
+    .title {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .title h1 {
+      font-size: 28px;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .title p {
+      color: #64748b;
+      font-size: 15px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+    }
+
+    .product-image {
+      height: 180px;
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 55px;
+    }
+
+    .product-content {
+      padding: 20px;
+    }
+
+    .product-content h2 {
+      font-size: 21px;
+      color: #0f172a;
+      margin-bottom: 10px;
+    }
+
+    .product-content p {
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .price {
+      font-size: 22px;
+      font-weight: bold;
+      color: #2563eb;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      width: 100%;
+      border: none;
+      background: #2563eb;
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+    }
+
+    /* Tablet: 600px to 1023px */
+    @media (min-width: 600px) {
+      .container {
+        padding: 30px;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+
+      .title h1 {
+        font-size: 34px;
+      }
+    }
+
+    /* Desktop: 1024px and above */
+    @media (min-width: 1024px) {
+      .container {
+        padding: 50px;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+      }
+
+      .title h1 {
+        font-size: 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="title">
+      <h1>Product Cards</h1>
+      <p>Responsive card grid using CSS media queries</p>
+    </div>
+
+    <section class="product-grid">
+
+      <div class="product-card">
+        <div class="product-image">💻</div>
+        <div class="product-content">
+          <h2>Laptop</h2>
+          <p>Powerful laptop for coding, design, and daily productivity.</p>
+          <div class="price">₹55,999</div>
+          <button class="btn">Buy Now</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">🎧</div>
+        <div class="product-content">
+          <h2>Headphones</h2>
+          <p>Wireless headphones with clear sound and long battery life.</p>
+          <div class="price">₹2,499</div>
+          <button class="btn">Buy Now</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">⌚</div>
+        <div class="product-content">
+          <h2>Smart Watch</h2>
+          <p>Track fitness, calls, notifications, and daily activity easily.</p>
+          <div class="price">₹3,999</div>
+          <button class="btn">Buy Now</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">📱</div>
+        <div class="product-content">
+          <h2>Smartphone</h2>
+          <p>Fast smartphone with excellent camera and smooth performance.</p>
+          <div class="price">₹24,999</div>
+          <button class="btn">Buy Now</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">📷</div>
+        <div class="product-content">
+          <h2>Camera</h2>
+          <p>Capture sharp photos and videos with professional quality.</p>
+          <div class="price">₹39,999</div>
+          <button class="btn">Buy Now</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">🖱️</div>
+        <div class="product-content">
+          <h2>Mouse</h2>
+          <p>Ergonomic wireless mouse for smooth and accurate control.</p>
+          <div class="price">₹999</div>
+          <button class="btn">Buy Now</button>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+</body>
+</html>

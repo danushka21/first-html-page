@@ -1,0 +1,37 @@
+Multi-Device Layout Test & Fix Log
+
+Tested Devices:
+1. iPhone SE - 375px width
+2. iPad Air - 820px width
+3. Desktop - 1440px width
+
+Issue 1:
+At 375px width, the CTA button height was too small for mobile tapping.
+
+Fix:
+Added min-height: 44px to .cta-btn and .submit-btn to make them mobile-friendly tap targets.
+
+Issue 2:
+At mobile width, some sections had too much horizontal spacing, which could create overflow.
+
+Fix:
+Used box-sizing: border-box globally and kept container width at 100% with responsive padding.
+
+Issue 3:
+At iPad Air width, cards were originally stacking in one column, wasting space.
+
+Fix:
+Added media query at min-width: 768px and changed .feature-grid to repeat(2, 1fr).
+
+Issue 4:
+At 1440px desktop width, the hero text was not large enough and cards did not use the full layout properly.
+
+Fix:
+Added media query at min-width: 1200px. Increased hero font size and changed feature grid to repeat(4, 1fr).
+
+Final Result:
+375px: Single column, no horizontal scrollbar, readable text.
+820px: 2-column feature grid with proper spacing.
+1440px: 4-column feature grid and large readable hero text.
+No JavaScript used.
+Viewport meta tag included.

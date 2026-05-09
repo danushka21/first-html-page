@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi Device Responsive Page</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.25rem;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #2563eb, #0f172a);
+      color: white;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      color: #e2e8f0;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0.85rem 1.5rem;
+      background: white;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      background: #e0f2fe;
+    }
+
+    .features {
+      padding: 3rem 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-title h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title p {
+      color: #64748b;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+    }
+
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .card p {
+      color: #64748b;
+      font-size: 1rem;
+    }
+
+    .contact {
+      padding: 3rem 0;
+      background: #e2e8f0;
+    }
+
+    .form-box {
+      background: white;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: bold;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 0.85rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      width: 100%;
+      min-height: 44px;
+      border: none;
+      background: #2563eb;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background: #1d4ed8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: #0f172a;
+      color: white;
+    }
+
+    /* iPad Air and tablet: 820px will show 2 columns */
+    @media (min-width: 768px) {
+      .container {
+        padding: 2rem;
+      }
+
+      .hero {
+        text-align: left;
+      }
+
+      .hero-content {
+        margin: 0;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+      }
+
+      .hero p {
+        font-size: 1.15rem;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .form-box {
+        padding: 2rem;
+      }
+    }
+
+    /* Desktop: 1440px will show 4 columns */
+    @media (min-width: 1200px) {
+      .container {
+        padding: 3rem 2rem;
+      }
+
+      .hero h1 {
+        font-size: 4rem;
+      }
+
+      .hero p {
+        font-size: 1.25rem;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+      }
+
+      .section-title h2 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Build Responsive Websites for Every Device</h1>
+        <p>
+          This page is tested for iPhone SE, iPad Air, and 1440px desktop screen sizes.
+          It uses a mobile-first layout with flexible grids and responsive spacing.
+        </p>
+        <a href="#contact" class="cta-btn">Get Started</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="container">
+      <div class="section-title">
+        <h2>Our Features</h2>
+        <p>Responsive cards that adapt perfectly across devices.</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="card">
+          <div class="card-icon">📱</div>
+          <h3>Mobile First</h3>
+          <p>The layout starts with a single column for small screens like iPhone SE.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">💻</div>
+          <h3>Tablet Ready</h3>
+          <p>At tablet size, the cards become a clean 2-column layout.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🖥️</div>
+          <h3>Desktop Layout</h3>
+          <p>On large screens, the feature section becomes a 4-column grid.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3>Smooth Resize</h3>
+          <p>The layout adjusts smoothly without JavaScript or horizontal scrolling.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="section-title">
+        <h2>Contact Us</h2>
+        <p>Form inputs are full-width on mobile and easy to use.</p>
+      </div>
+
+      <form class="form-box">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Enter your name" />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Enter your email" />
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Type your message"></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Responsive Layout Test Page</p>
+  </footer>
+
+</body>
+</html>
