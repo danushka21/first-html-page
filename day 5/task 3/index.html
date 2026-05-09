@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full Page Grid Layout</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    .page-layout {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 250px 1fr 1fr 1fr;
+      grid-template-rows: 80px 1fr 70px;
+      grid-template-areas:
+        "header header header header"
+        "sidebar content1 content2 content3"
+        "footer footer footer footer";
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .header {
+      grid-area: header;
+      background: #1e293b;
+      color: white;
+      border-radius: 12px;
+      padding: 20px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header h1 {
+      font-size: 26px;
+    }
+
+    .nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+
+    .sidebar {
+      grid-area: sidebar;
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .sidebar h2 {
+      margin-bottom: 15px;
+      color: #1e293b;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar li {
+      padding: 12px;
+      margin-bottom: 10px;
+      background: #e2e8f0;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .content {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .content h2 {
+      margin-bottom: 15px;
+      color: #0f172a;
+    }
+
+    .content p {
+      line-height: 1.6;
+      color: #555;
+    }
+
+    .content-1 {
+      grid-area: content1;
+    }
+
+    .content-2 {
+      grid-area: content2;
+    }
+
+    .content-3 {
+      grid-area: content3;
+    }
+
+    .footer {
+      grid-area: footer;
+      background: #1e293b;
+      color: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .page-layout {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto 1fr 1fr auto;
+        grid-template-areas:
+          "header header"
+          "sidebar sidebar"
+          "content1 content2"
+          "content3 content3"
+          "footer footer";
+      }
+    }
+
+    @media (max-width: 600px) {
+      .page-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        grid-template-areas:
+          "header"
+          "sidebar"
+          "content1"
+          "content2"
+          "content3"
+          "footer";
+      }
+
+      .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+
+      .nav a {
+        margin: 0 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-layout">
+
+    <header class="header">
+      <h1>My Webpage</h1>
+      <nav class="nav">
+        <a href="#">Home</a>
+        <a href="#">Courses</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <aside class="sidebar">
+      <h2>Sidebar</h2>
+      <ul>
+        <li>Dashboard</li>
+        <li>Projects</li>
+        <li>Assignments</li>
+        <li>Settings</li>
+      </ul>
+    </aside>
+
+    <section class="content content-1">
+      <h2>HTML</h2>
+      <p>
+        HTML is used to structure the content of a webpage. It provides elements
+        like headings, paragraphs, images, links, and forms.
+      </p>
+    </section>
+
+    <section class="content content-2">
+      <h2>CSS Grid</h2>
+      <p>
+        CSS Grid is used to create two-dimensional layouts. It helps arrange
+        rows and columns clearly using grid-template-areas.
+      </p>
+    </section>
+
+    <section class="content content-3">
+      <h2>Responsive Design</h2>
+      <p>
+        Responsive design makes the layout adjust properly on desktop, tablet,
+        and mobile screens using media queries.
+      </p>
+    </section>
+
+    <footer class="footer">
+      <p>© 2026 My Webpage | Built with CSS Grid Template Areas</p>
+    </footer>
+
+  </div>
+</body>
+</html>
